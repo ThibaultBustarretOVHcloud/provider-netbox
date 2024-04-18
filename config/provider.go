@@ -10,12 +10,18 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/device"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/deviceinterface"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/devicerole"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/devicetype"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/manufacturer"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/site"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/ipam/ipaddress"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	resourcePrefix = "netbox"
+	modulePath     = "github.com/ovhcloud/provider-netbox"
 )
 
 //go:embed schema.json
@@ -27,7 +33,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.upbound.io"),
+		ujconfig.WithRootGroup("ovhcloud.com"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
@@ -36,7 +42,13 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		manufacturer.Configure,
+		site.Configure,
+		devicetype.Configure,
+		devicerole.Configure,
+		device.Configure,
+		deviceinterface.Configure,
+		ipaddress.Configure,
 	} {
 		configure(pc)
 	}
