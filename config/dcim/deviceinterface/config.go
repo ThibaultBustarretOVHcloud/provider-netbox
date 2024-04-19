@@ -9,7 +9,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DeviceInterface"
 		r.References["device_id"] = config.Reference{
 			Type:      "Device",
-			Extractor: "github.com/upbound/upjet/pkg/resource.ExtractResourceID()", // Needed ?
+			Extractor: "github.com/crossplane/upjet/pkg/resource.ExtractResourceID()", // Needed ?
 		}
 	})
 }
