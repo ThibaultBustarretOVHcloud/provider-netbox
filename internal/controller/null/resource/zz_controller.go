@@ -23,8 +23,8 @@ import (
 	"github.com/crossplane/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/ovhcloud/provider-netbox/apis/null/v1alpha1"
-	features "github.com/ovhcloud/provider-netbox/internal/features"
+	v1alpha1 "github.com/ThibaultBustarretOVHcloud/provider-netbox/apis/null/v1alpha1"
+	features "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/features"
 )
 
 // Setup adds a controller that reconciles Resource managed resources.

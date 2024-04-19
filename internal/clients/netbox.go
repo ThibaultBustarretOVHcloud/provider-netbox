@@ -15,7 +15,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/terraform"
 
-	"github.com/ovhcloud/provider-netbox/apis/v1beta1"
+	"github.com/ThibaultBustarretOVHcloud/provider-netbox/apis/v1beta1"
 )
 
 const (

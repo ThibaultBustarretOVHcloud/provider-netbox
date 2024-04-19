@@ -21,7 +21,7 @@ import (
 
 const (
 	resourcePrefix = "netbox"
-	modulePath     = "github.com/ovhcloud/provider-netbox"
+	modulePath     = "github.com/ThibaultBustarretOVHcloud/provider-netbox"
 )
 
 //go:embed schema.json
@@ -33,7 +33,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("ovhcloud.com"),
+		ujconfig.WithRootGroup("ThibaultBustarretOVHcloud.com"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
