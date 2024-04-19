@@ -1,0 +1,13 @@
+apiVersion: ipam.ThibaultBustarretOVHcloud.com/v1alpha1
+kind: IPAddress
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ipam/v1alpha1/ipaddress
+  labels:
+    testing.upbound.io/example-name: this
+  name: this
+spec:
+  forProvider:
+    ipAddress: 10.0.0.60/24
+    status: active
+    virtualMachineInterfaceId: ${netbox_interface.this.id}

@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: providerconfigs.netbox.upbound.io
+  name: providerconfigs.netbox.ThibaultBustarretOVHcloud.com
 spec:
-  group: netbox.upbound.io
+  group: netbox.ThibaultBustarretOVHcloud.com
   names:
     categories:
     - crossplane

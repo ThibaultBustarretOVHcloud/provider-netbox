@@ -4,18 +4,18 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: resources.null.netbox.upbound.io
+  name: deviceinterfaces.dcim.ThibaultBustarretOVHcloud.com
 spec:
-  group: null.netbox.upbound.io
+  group: dcim.ThibaultBustarretOVHcloud.com
   names:
     categories:
     - crossplane
     - managed
     - netbox
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    kind: DeviceInterface
+    listKind: DeviceInterfaceList
+    plural: deviceinterfaces
+    singular: deviceinterface
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,10 +34,12 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API. The null_resource
-          resource implements the standard resource lifecycle but takes no further
-          action. The triggers argument allows specifying an arbitrary set of values
-          that, when changed, will cause the resource to be replaced.
+        description: 'DeviceInterface is the Schema for the DeviceInterfaces API.
+          From the official documentation https://docs.netbox.dev/en/stable/features/device/#interface:
+          Interfaces in NetBox represent network interfaces used to exchange data
+          with connected devices. On modern networks, these are most commonly Ethernet,
+          but other types are supported as well. IP addresses and VLANs can be assigned
+          to interfaces.'
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -52,7 +54,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: DeviceInterfaceSpec defines the desired state of DeviceInterface
             properties:
               deletionPolicy:
                 default: Delete
@@ -69,13 +71,134 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
+                  description:
+                    description: (String)
+                    type: string
+                  deviceId:
+                    description: (Number)
+                    type: number
+                  deviceIdRef:
+                    description: Reference to a Device to populate deviceId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
                     type: object
+                  deviceIdSelector:
+                    description: Selector for a Device to populate deviceId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
+                    type: number
+                  macAddress:
+                    description: (String)
+                    type: string
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
+                    description: (Number)
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
+                    items:
+                      type: number
+                    type: array
+                  tags:
+                    description: (Set of String)
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
+                    description: (Number)
+                    type: number
                 type: object
               initProvider:
                 description: THIS IS A BETA FIELD. It will be honored unless the Management
@@ -89,13 +212,58 @@ spec:
                   for example because of an external controller is managing them,
                   like an autoscaler.
                 properties:
-                  triggers:
-                    additionalProperties:
+                  description:
+                    description: (String)
+                    type: string
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
+                    type: number
+                  macAddress:
+                    description: (String)
+                    type: string
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
+                    description: (Number)
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
+                    items:
+                      type: number
+                    type: array
+                  tags:
+                    description: (Set of String)
+                    items:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
-                    type: object
+                    type: array
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
+                    description: (Number)
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -257,20 +425,78 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: DeviceInterfaceStatus defines the observed state of DeviceInterface.
             properties:
               atProvider:
                 properties:
-                  id:
+                  description:
+                    description: (String)
                     type: string
-                  triggers:
-                    additionalProperties:
+                  deviceId:
+                    description: (Number)
+                    type: number
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
+                    type: number
+                  macAddress:
+                    description: (String)
+                    type: string
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
+                    description: (Number)
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
+                    items:
+                      type: number
+                    type: array
+                  tags:
+                    description: (Set of String)
+                    items:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
-                    type: object
+                    type: array
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
+                    description: (Number)
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.

@@ -1,0 +1,11 @@
+apiVersion: dcim.ThibaultBustarretOVHcloud.com/v1alpha1
+kind: DeviceRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dcim/v1alpha1/devicerole
+  labels:
+    testing.upbound.io/example-name: core_sw
+  name: core-sw
+spec:
+  forProvider:
+    colorHex: FF00FF
