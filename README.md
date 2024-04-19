@@ -5,6 +5,8 @@ is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 Netbox API.
 
+⚠ This project is only a proof-of-concept as of now, it's very experimental.
+
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
