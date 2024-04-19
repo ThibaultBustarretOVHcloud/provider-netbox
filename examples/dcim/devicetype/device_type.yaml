@@ -1,0 +1,20 @@
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: Manufacturer
+metadata: 
+  name: test-manufacturer
+spec:
+  forProvider:
+    slug: test-manufacturer
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: DeviceType
+metadata:
+  name: test-devicetype
+spec:
+  forProvider:
+    model: test-model
+    manufacturerIdRef:
+      name: test-manufacturer
+    partNumber: "1234567"
+  providerConfigRef:
+    name: default

@@ -1,0 +1,76 @@
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: Manufacturer
+metadata: 
+  name: test-manufacturer
+spec:
+  forProvider:
+    slug: test-manufacturer
+  providerConfigRef:
+    name: default
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: DeviceRole
+metadata:
+  name: test-role
+spec:
+  forProvider:
+    colorHex: 00ff00
+  providerConfigRef:
+    name: default
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: Site
+metadata:
+  name: "test-site"
+spec:
+  forProvider:
+    description: dev
+    facility: "Datacenter"
+    status: active
+    timezone: "Africa/Johannesburg"
+  providerConfigRef:
+    name: default
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: DeviceType
+metadata:
+  name: test-devicetype
+spec:
+  forProvider:
+    model: test-model
+    manufacturerIdRef:
+      name: test-manufacturer
+    partNumber: "1234567"
+  providerConfigRef:
+    name: default
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: Device
+metadata:
+  name: test-device
+spec:
+    forProvider:
+      deviceTypeRef:
+        name: test-devicetype
+      siteRef:
+        name: test-site
+      deviceRoleRef:
+        name: test-role
+      serial: "1234567"
+    providerConfigRef:
+      name: default
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: DeviceInterface
+metadata:
+  name: test-deviceinterface
+spec:
+    forProvider:
+      deviceRef:
+        name: test-device
+      name: "eth0"
+      type: "1000base-t"
+      mgmtOnly: false
+    providerConfigRef:
+      name: default

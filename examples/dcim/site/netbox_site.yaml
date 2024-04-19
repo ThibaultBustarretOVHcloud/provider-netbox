@@ -1,0 +1,13 @@
+---
+apiVersion: dcim.netbox.upbound.io/v1alpha1
+kind: Site
+metadata:
+  name: "test-site"
+spec:
+  forProvider:
+    description: dev
+    facility: "Datacenter"
+    status: active
+    timezone: "Africa/Johannesburg"
+  providerConfigRef:
+    name: default
