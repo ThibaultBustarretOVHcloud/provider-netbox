@@ -8,7 +8,7 @@ export TERRAFORM_VERSION ?= 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE ?= e-breuninger/netbox
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/e-breuninger/terraform-provider-netbox
-export TERRAFORM_PROVIDER_VERSION ?= 3.8.5 # Configured for netbox version 3.2.8
+export TERRAFORM_PROVIDER_VERSION ?= 3.8.5
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-netbox
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= ${TERRAFORM_PROVIDER_REPO}/releases/download/v${TERRAFORM_PROVIDER_VERSION}
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-netbox_${TERRAFORM_PROVIDER_VERSION}
