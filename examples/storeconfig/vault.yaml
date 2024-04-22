@@ -1,4 +1,4 @@
-apiVersion: netbox.upbound.io/v1alpha1
+apiVersion: netbox.thibaultbustarret-ovhcloud.com
 kind: StoreConfig
 metadata:
   name: vault

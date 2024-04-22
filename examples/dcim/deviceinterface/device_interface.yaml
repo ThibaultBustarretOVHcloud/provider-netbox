@@ -1,5 +1,5 @@
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: Manufacturer
 metadata: 
   name: test-manufacturer
@@ -9,7 +9,7 @@ spec:
   providerConfigRef:
     name: default
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: DeviceRole
 metadata:
   name: test-role
@@ -19,7 +19,7 @@ spec:
   providerConfigRef:
     name: default
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: Site
 metadata:
   name: "test-site"
@@ -32,7 +32,7 @@ spec:
   providerConfigRef:
     name: default
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: DeviceType
 metadata:
   name: test-devicetype
@@ -45,32 +45,31 @@ spec:
   providerConfigRef:
     name: default
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: Device
 metadata:
   name: test-device
 spec:
     forProvider:
-      deviceTypeRef:
+      deviceTypeIdRef:
         name: test-devicetype
-      siteRef:
+      siteIdRef:
         name: test-site
-      deviceRoleRef:
+      roleIdRef:
         name: test-role
       serial: "1234567"
     providerConfigRef:
       name: default
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: DeviceInterface
 metadata:
   name: test-deviceinterface
 spec:
     forProvider:
-      deviceRef:
+      deviceIdRef:
         name: test-device
-      name: "eth0"
       type: "1000base-t"
-      mgmtOnly: false
+      mgmtonly: false
     providerConfigRef:
       name: default

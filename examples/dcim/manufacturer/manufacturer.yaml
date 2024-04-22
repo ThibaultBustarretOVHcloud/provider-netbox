@@ -1,5 +1,5 @@
 ---
-apiVersion: dcim.netbox.upbound.io/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: Manufacturer
 metadata: 
   name: test-manufacturer
