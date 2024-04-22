@@ -232,11 +232,6 @@ func (in *DeviceInterfaceInitParameters) DeepCopyInto(out *DeviceInterfaceInitPa
 		*out = new(float64)
 		**out = **in
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.ParentDeviceInterfaceID != nil {
 		in, out := &in.ParentDeviceInterfaceID, &out.ParentDeviceInterfaceID
 		*out = new(float64)
@@ -371,11 +366,6 @@ func (in *DeviceInterfaceObservation) DeepCopyInto(out *DeviceInterfaceObservati
 		*out = new(float64)
 		**out = **in
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.ParentDeviceInterfaceID != nil {
 		in, out := &in.ParentDeviceInterfaceID, &out.ParentDeviceInterfaceID
 		*out = new(float64)
@@ -481,11 +471,6 @@ func (in *DeviceInterfaceParameters) DeepCopyInto(out *DeviceInterfaceParameters
 	if in.Mtu != nil {
 		in, out := &in.Mtu, &out.Mtu
 		*out = new(float64)
-		**out = **in
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
 		**out = **in
 	}
 	if in.ParentDeviceInterfaceID != nil {

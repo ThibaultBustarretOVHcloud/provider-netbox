@@ -11,5 +11,4 @@ spec:
     deviceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    name: testinterface
     type: 1000base-t

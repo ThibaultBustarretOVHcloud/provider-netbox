@@ -43,9 +43,6 @@ type DeviceInterfaceInitParameters struct {
 	// (Number)
 	Mtu *float64 `json:"mtu,omitempty" tf:"mtu,omitempty"`
 
-	// (String)
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
 	// (Number) The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
 	// The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
 	ParentDeviceInterfaceID *float64 `json:"parentDeviceInterfaceId,omitempty" tf:"parent_device_interface_id,omitempty"`
@@ -97,9 +94,6 @@ type DeviceInterfaceObservation struct {
 
 	// (Number)
 	Mtu *float64 `json:"mtu,omitempty" tf:"mtu,omitempty"`
-
-	// (String)
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Number) The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
 	// The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
@@ -168,10 +162,6 @@ type DeviceInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	Mtu *float64 `json:"mtu,omitempty" tf:"mtu,omitempty"`
 
-	// (String)
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
 	// (Number) The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
 	// The netbox_device_interface id of the parent interface. Useful if this interface is a logical interface.
 	// +kubebuilder:validation:Optional
@@ -233,7 +223,6 @@ type DeviceInterfaceStatus struct {
 type DeviceInterface struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   DeviceInterfaceSpec   `json:"spec"`
 	Status DeviceInterfaceStatus `json:"status,omitempty"`
