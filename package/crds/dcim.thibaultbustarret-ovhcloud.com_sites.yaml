@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: sites.dcim.ThibaultBustarretOVHcloud.com
+  name: sites.dcim.thibaultbustarret-ovhcloud.com
 spec:
-  group: dcim.ThibaultBustarretOVHcloud.com
+  group: dcim.thibaultbustarret-ovhcloud.com
   names:
     categories:
     - crossplane

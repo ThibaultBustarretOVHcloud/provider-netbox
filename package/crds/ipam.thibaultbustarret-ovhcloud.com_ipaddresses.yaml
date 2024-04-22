@@ -4,18 +4,18 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: devices.dcim.ThibaultBustarretOVHcloud.com
+  name: ipaddresses.ipam.thibaultbustarret-ovhcloud.com
 spec:
-  group: dcim.ThibaultBustarretOVHcloud.com
+  group: ipam.thibaultbustarret-ovhcloud.com
   names:
     categories:
     - crossplane
     - managed
     - netbox
-    kind: Device
-    listKind: DeviceList
-    plural: devices
-    singular: device
+    kind: IPAddress
+    listKind: IPAddressList
+    plural: ipaddresses
+    singular: ipaddress
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,13 +34,14 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: 'Device is the Schema for the Devices API. From the official
-          documentation https://docs.netbox.dev/en/stable/features/devices/#devices:
-          Every piece of hardware which is installed within a site or rack exists
-          in NetBox as a device. Devices are measured in rack units (U) and can be
-          half depth or full depth. A device may have a height of 0U: These devices
-          do not consume vertical rack space and cannot be assigned to a particular
-          rack unit. A common example of a 0U device is a vertically-mounted PDU.'
+        description: 'IPAddress is the Schema for the IPAddresss API. From the official
+          documentation https://docs.netbox.dev/en/stable/features/ipam/#ip-addresses:
+          An IP address comprises a single host address (either IPv4 or IPv6) and
+          its subnet mask. Its mask should match exactly how the IP address is configured
+          on an interface in the real world. Like a prefix, an IP address can optionally
+          be assigned to a VRF (otherwise, it will appear in the "global" table).
+          IP addresses are automatically arranged under parent prefixes within their
+          respective VRFs according to the IP hierarchy.'
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -55,7 +56,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: DeviceSpec defines the desired state of Device
+            description: IPAddressSpec defines the desired state of IPAddress
             properties:
               deletionPolicy:
                 default: Delete
@@ -72,28 +73,16 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  assetTag:
-                    description: (String)
-                    type: string
-                  clusterId:
-                    description: (Number)
-                    type: number
-                  comments:
-                    description: (String)
-                    type: string
-                  customFields:
-                    additionalProperties:
-                      type: string
-                    description: (Map of String)
-                    type: object
                   description:
                     description: (String)
                     type: string
-                  deviceTypeId:
-                    description: (Number)
+                  deviceInterfaceId:
+                    description: (Number) Conflicts with interface_id and virtual_machine_interface_id.
+                      Conflicts with `interface_id` and `virtual_machine_interface_id`.
                     type: number
-                  deviceTypeIdRef:
-                    description: Reference to a DeviceType to populate deviceTypeId.
+                  deviceInterfaceIdRef:
+                    description: Reference to a DeviceInterface in dcim to populate
+                      deviceInterfaceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -126,8 +115,9 @@ spec:
                     required:
                     - name
                     type: object
-                  deviceTypeIdSelector:
-                    description: Selector for a DeviceType to populate deviceTypeId.
+                  deviceInterfaceIdSelector:
+                    description: Selector for a DeviceInterface in dcim to populate
+                      deviceInterfaceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -165,188 +155,34 @@ spec:
                             type: string
                         type: object
                     type: object
-                  localContextData:
-                    description: (String) This is best managed through the use of
-                      jsonencode and a map of settings. This is best managed through
-                      the use of `jsonencode` and a map of settings.
-                    type: string
-                  locationId:
-                    description: (Number)
-                    type: number
-                  platformId:
-                    description: (Number)
-                    type: number
-                  rackFace:
-                    description: (String) Valid values are front and rear. Required
-                      when rack_position is set. Valid values are `front` and `rear`.
-                      Required when `rack_position` is set.
-                    type: string
-                  rackId:
-                    description: (Number)
-                    type: number
-                  rackPosition:
-                    description: (Number)
-                    type: number
-                  roleId:
-                    description: (Number)
-                    type: number
-                  roleIdRef:
-                    description: Reference to a DeviceRole to populate roleId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  roleIdSelector:
-                    description: Selector for a DeviceRole to populate roleId.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  serial:
+                  dnsName:
                     description: (String)
                     type: string
-                  siteId:
+                  interfaceId:
+                    description: (Number) Required when object_type is set. Required
+                      when `object_type` is set.
+                    type: number
+                  ipAddress:
+                    description: (String)
+                    type: string
+                  natInsideAddressId:
                     description: (Number)
                     type: number
-                  siteIdRef:
-                    description: Reference to a Site to populate siteId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  siteIdSelector:
-                    description: Selector for a Site to populate siteId.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
+                  objectType:
+                    description: (String) Valid values are virtualization.vminterface
+                      and dcim.interface. Required when interface_id is set. Valid
+                      values are `virtualization.vminterface` and `dcim.interface`.
+                      Required when `interface_id` is set.
+                    type: string
+                  role:
+                    description: (String) Valid values are loopback, secondary, anycast,
+                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
+                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
+                    type: string
                   status:
-                    description: (String) Valid values are offline, active, planned,
-                      staged, failed and inventory. Defaults to active. Valid values
-                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
-                      Defaults to `active`.
+                    description: (String) Valid values are active, reserved, deprecated,
+                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
+                      `dhcp` and `slaac`.
                     type: string
                   tags:
                     description: (Set of String)
@@ -356,20 +192,11 @@ spec:
                   tenantId:
                     description: (Number)
                     type: number
-                  virtualChassisId:
-                    description: (Number) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
+                  virtualMachineInterfaceId:
+                    description: (Number) Conflicts with interface_id and device_interface_id.
+                      Conflicts with `interface_id` and `device_interface_id`.
                     type: number
-                  virtualChassisMaster:
-                    description: (Boolean) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
-                    type: boolean
-                  virtualChassisPosition:
-                    description: (Number)
-                    type: number
-                  virtualChassisPriority:
+                  vrfId:
                     description: (Number)
                     type: number
                 type: object
@@ -385,53 +212,37 @@ spec:
                   for example because of an external controller is managing them,
                   like an autoscaler.
                 properties:
-                  assetTag:
-                    description: (String)
-                    type: string
-                  clusterId:
-                    description: (Number)
-                    type: number
-                  comments:
-                    description: (String)
-                    type: string
-                  customFields:
-                    additionalProperties:
-                      type: string
-                    description: (Map of String)
-                    type: object
                   description:
                     description: (String)
                     type: string
-                  localContextData:
-                    description: (String) This is best managed through the use of
-                      jsonencode and a map of settings. This is best managed through
-                      the use of `jsonencode` and a map of settings.
-                    type: string
-                  locationId:
-                    description: (Number)
-                    type: number
-                  platformId:
-                    description: (Number)
-                    type: number
-                  rackFace:
-                    description: (String) Valid values are front and rear. Required
-                      when rack_position is set. Valid values are `front` and `rear`.
-                      Required when `rack_position` is set.
-                    type: string
-                  rackId:
-                    description: (Number)
-                    type: number
-                  rackPosition:
-                    description: (Number)
-                    type: number
-                  serial:
+                  dnsName:
                     description: (String)
                     type: string
+                  interfaceId:
+                    description: (Number) Required when object_type is set. Required
+                      when `object_type` is set.
+                    type: number
+                  ipAddress:
+                    description: (String)
+                    type: string
+                  natInsideAddressId:
+                    description: (Number)
+                    type: number
+                  objectType:
+                    description: (String) Valid values are virtualization.vminterface
+                      and dcim.interface. Required when interface_id is set. Valid
+                      values are `virtualization.vminterface` and `dcim.interface`.
+                      Required when `interface_id` is set.
+                    type: string
+                  role:
+                    description: (String) Valid values are loopback, secondary, anycast,
+                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
+                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
+                    type: string
                   status:
-                    description: (String) Valid values are offline, active, planned,
-                      staged, failed and inventory. Defaults to active. Valid values
-                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
-                      Defaults to `active`.
+                    description: (String) Valid values are active, reserved, deprecated,
+                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
+                      `dhcp` and `slaac`.
                     type: string
                   tags:
                     description: (Set of String)
@@ -441,20 +252,11 @@ spec:
                   tenantId:
                     description: (Number)
                     type: number
-                  virtualChassisId:
-                    description: (Number) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
+                  virtualMachineInterfaceId:
+                    description: (Number) Conflicts with interface_id and device_interface_id.
+                      Conflicts with `interface_id` and `device_interface_id`.
                     type: number
-                  virtualChassisMaster:
-                    description: (Boolean) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
-                    type: boolean
-                  virtualChassisPosition:
-                    description: (Number)
-                    type: number
-                  virtualChassisPriority:
+                  vrfId:
                     description: (Number)
                     type: number
                 type: object
@@ -618,76 +420,73 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.ipAddress is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.ipAddress)
+                || (has(self.initProvider) && has(self.initProvider.ipAddress))'
+            - message: spec.forProvider.status is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.status)
+                || (has(self.initProvider) && has(self.initProvider.status))'
           status:
-            description: DeviceStatus defines the observed state of Device.
+            description: IPAddressStatus defines the observed state of IPAddress.
             properties:
               atProvider:
                 properties:
-                  assetTag:
-                    description: (String)
-                    type: string
-                  clusterId:
-                    description: (Number)
-                    type: number
-                  comments:
-                    description: (String)
-                    type: string
-                  customFields:
-                    additionalProperties:
-                      type: string
-                    description: (Map of String)
-                    type: object
                   description:
                     description: (String)
                     type: string
-                  deviceTypeId:
-                    description: (Number)
+                  deviceInterfaceId:
+                    description: (Number) Conflicts with interface_id and virtual_machine_interface_id.
+                      Conflicts with `interface_id` and `virtual_machine_interface_id`.
                     type: number
+                  dnsName:
+                    description: (String)
+                    type: string
                   id:
                     description: (String) The ID of this resource.
                     type: string
-                  localContextData:
-                    description: (String) This is best managed through the use of
-                      jsonencode and a map of settings. This is best managed through
-                      the use of `jsonencode` and a map of settings.
-                    type: string
-                  locationId:
-                    description: (Number)
+                  interfaceId:
+                    description: (Number) Required when object_type is set. Required
+                      when `object_type` is set.
                     type: number
-                  platformId:
-                    description: (Number)
-                    type: number
-                  primaryIpv4:
-                    description: (Number)
-                    type: number
-                  primaryIpv6:
-                    description: (Number)
-                    type: number
-                  rackFace:
-                    description: (String) Valid values are front and rear. Required
-                      when rack_position is set. Valid values are `front` and `rear`.
-                      Required when `rack_position` is set.
-                    type: string
-                  rackId:
-                    description: (Number)
-                    type: number
-                  rackPosition:
-                    description: (Number)
-                    type: number
-                  roleId:
-                    description: (Number)
-                    type: number
-                  serial:
+                  ipAddress:
                     description: (String)
                     type: string
-                  siteId:
+                  natInsideAddressId:
                     description: (Number)
                     type: number
+                  natOutsideAddresses:
+                    description: (List of Object) (see below for nested schema)
+                    items:
+                      properties:
+                        addressFamily:
+                          description: (Number)
+                          type: number
+                        id:
+                          description: (String) The ID of this resource.
+                          type: number
+                        ipAddress:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  objectType:
+                    description: (String) Valid values are virtualization.vminterface
+                      and dcim.interface. Required when interface_id is set. Valid
+                      values are `virtualization.vminterface` and `dcim.interface`.
+                      Required when `interface_id` is set.
+                    type: string
+                  role:
+                    description: (String) Valid values are loopback, secondary, anycast,
+                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
+                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
+                    type: string
                   status:
-                    description: (String) Valid values are offline, active, planned,
-                      staged, failed and inventory. Defaults to active. Valid values
-                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
-                      Defaults to `active`.
+                    description: (String) Valid values are active, reserved, deprecated,
+                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
+                      `dhcp` and `slaac`.
                     type: string
                   tags:
                     description: (Set of String)
@@ -697,20 +496,11 @@ spec:
                   tenantId:
                     description: (Number)
                     type: number
-                  virtualChassisId:
-                    description: (Number) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
+                  virtualMachineInterfaceId:
+                    description: (Number) Conflicts with interface_id and device_interface_id.
+                      Conflicts with `interface_id` and `device_interface_id`.
                     type: number
-                  virtualChassisMaster:
-                    description: (Boolean) Required when virtual_chassis_master and
-                      virtual_chassis_id is set. Required when `virtual_chassis_master`
-                      and `virtual_chassis_id` is set.
-                    type: boolean
-                  virtualChassisPosition:
-                    description: (Number)
-                    type: number
-                  virtualChassisPriority:
+                  vrfId:
                     description: (Number)
                     type: number
                 type: object

@@ -23,8 +23,8 @@ import (
 	"github.com/crossplane/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/ThibaultBustarretOVHcloud/provider-netbox/apis/dcim/v1alpha1"
-	features "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/features"
+	v1alpha1 "github.com/thibaultbustarret-ovhcloud/provider-netbox/apis/dcim/v1alpha1"
+	features "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/features"
 )
 
 // Setup adds a controller that reconciles Site managed resources.

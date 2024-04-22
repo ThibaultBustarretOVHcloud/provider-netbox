@@ -1,4 +1,4 @@
-module github.com/ThibaultBustarretOVHcloud/provider-netbox
+module github.com/thibaultbustarret-ovhcloud/provider-netbox
 
 go 1.19
 

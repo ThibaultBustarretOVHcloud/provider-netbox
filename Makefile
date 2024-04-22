@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= provider-netbox
-PROJECT_REPO ?= github.com/ThibaultBustarretOVHcloud/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/thibaultbustarret-ovhcloud/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.2.1
 

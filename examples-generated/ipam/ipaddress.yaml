@@ -1,4 +1,4 @@
-apiVersion: ipam.ThibaultBustarretOVHcloud.com/v1alpha1
+apiVersion: ipam.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: IPAddress
 metadata:
   annotations:

@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-netbox
 spec:
-  package: ThibaultBustarretOVHcloud/provider-netbox:v0.1.0
+  package: thibaultbustarret-ovhcloud/provider-netbox:v0.1.0

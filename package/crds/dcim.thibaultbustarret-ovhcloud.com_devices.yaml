@@ -4,18 +4,18 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: deviceinterfaces.dcim.ThibaultBustarretOVHcloud.com
+  name: devices.dcim.thibaultbustarret-ovhcloud.com
 spec:
-  group: dcim.ThibaultBustarretOVHcloud.com
+  group: dcim.thibaultbustarret-ovhcloud.com
   names:
     categories:
     - crossplane
     - managed
     - netbox
-    kind: DeviceInterface
-    listKind: DeviceInterfaceList
-    plural: deviceinterfaces
-    singular: deviceinterface
+    kind: Device
+    listKind: DeviceList
+    plural: devices
+    singular: device
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,12 +34,13 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: 'DeviceInterface is the Schema for the DeviceInterfaces API.
-          From the official documentation https://docs.netbox.dev/en/stable/features/device/#interface:
-          Interfaces in NetBox represent network interfaces used to exchange data
-          with connected devices. On modern networks, these are most commonly Ethernet,
-          but other types are supported as well. IP addresses and VLANs can be assigned
-          to interfaces.'
+        description: 'Device is the Schema for the Devices API. From the official
+          documentation https://docs.netbox.dev/en/stable/features/devices/#devices:
+          Every piece of hardware which is installed within a site or rack exists
+          in NetBox as a device. Devices are measured in rack units (U) and can be
+          half depth or full depth. A device may have a height of 0U: These devices
+          do not consume vertical rack space and cannot be assigned to a particular
+          rack unit. A common example of a 0U device is a vertically-mounted PDU.'
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,7 +55,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: DeviceInterfaceSpec defines the desired state of DeviceInterface
+            description: DeviceSpec defines the desired state of Device
             properties:
               deletionPolicy:
                 default: Delete
@@ -71,14 +72,28 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  assetTag:
+                    description: (String)
+                    type: string
+                  clusterId:
+                    description: (Number)
+                    type: number
+                  comments:
+                    description: (String)
+                    type: string
+                  customFields:
+                    additionalProperties:
+                      type: string
+                    description: (Map of String)
+                    type: object
                   description:
                     description: (String)
                     type: string
-                  deviceId:
+                  deviceTypeId:
                     description: (Number)
                     type: number
-                  deviceIdRef:
-                    description: Reference to a Device to populate deviceId.
+                  deviceTypeIdRef:
+                    description: Reference to a DeviceType to populate deviceTypeId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -111,8 +126,8 @@ spec:
                     required:
                     - name
                     type: object
-                  deviceIdSelector:
-                    description: Selector for a Device to populate deviceId.
+                  deviceTypeIdSelector:
+                    description: Selector for a DeviceType to populate deviceTypeId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -150,50 +165,211 @@ spec:
                             type: string
                         type: object
                     type: object
-                  enabled:
-                    description: (Boolean) Defaults to true. Defaults to `true`.
-                    type: boolean
-                  lagDeviceInterfaceId:
-                    description: (Number) If this device is a member of a LAG group,
-                      you can reference the LAG interface here. If this device is
-                      a member of a LAG group, you can reference the LAG interface
-                      here.
+                  localContextData:
+                    description: (String) This is best managed through the use of
+                      jsonencode and a map of settings. This is best managed through
+                      the use of `jsonencode` and a map of settings.
+                    type: string
+                  locationId:
+                    description: (Number)
                     type: number
-                  macAddress:
+                  platformId:
+                    description: (Number)
+                    type: number
+                  rackFace:
+                    description: (String) Valid values are front and rear. Required
+                      when rack_position is set. Valid values are `front` and `rear`.
+                      Required when `rack_position` is set.
+                    type: string
+                  rackId:
+                    description: (Number)
+                    type: number
+                  rackPosition:
+                    description: (Number)
+                    type: number
+                  roleId:
+                    description: (Number)
+                    type: number
+                  roleIdRef:
+                    description: Reference to a DeviceRole to populate roleId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  roleIdSelector:
+                    description: Selector for a DeviceRole to populate roleId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  serial:
                     description: (String)
                     type: string
-                  mgmtonly:
-                    description: (Boolean)
-                    type: boolean
-                  mode:
-                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                  siteId:
+                    description: (Number)
+                    type: number
+                  siteIdRef:
+                    description: Reference to a Site to populate siteId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  siteIdSelector:
+                    description: Selector for a Site to populate siteId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  status:
+                    description: (String) Valid values are offline, active, planned,
+                      staged, failed and inventory. Defaults to active. Valid values
+                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
+                      Defaults to `active`.
                     type: string
-                  mtu:
-                    description: (Number)
-                    type: number
-                  parentDeviceInterfaceId:
-                    description: (Number) The netbox_device_interface id of the parent
-                      interface. Useful if this interface is a logical interface.
-                      The netbox_device_interface id of the parent interface. Useful
-                      if this interface is a logical interface.
-                    type: number
-                  speed:
-                    description: (Number)
-                    type: number
-                  taggedVlans:
-                    description: (Set of Number)
-                    items:
-                      type: number
-                    type: array
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  type:
-                    description: (String)
-                    type: string
-                  untaggedVlan:
+                  tenantId:
+                    description: (Number)
+                    type: number
+                  virtualChassisId:
+                    description: (Number) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: number
+                  virtualChassisMaster:
+                    description: (Boolean) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: boolean
+                  virtualChassisPosition:
+                    description: (Number)
+                    type: number
+                  virtualChassisPriority:
                     description: (Number)
                     type: number
                 type: object
@@ -209,53 +385,76 @@ spec:
                   for example because of an external controller is managing them,
                   like an autoscaler.
                 properties:
+                  assetTag:
+                    description: (String)
+                    type: string
+                  clusterId:
+                    description: (Number)
+                    type: number
+                  comments:
+                    description: (String)
+                    type: string
+                  customFields:
+                    additionalProperties:
+                      type: string
+                    description: (Map of String)
+                    type: object
                   description:
                     description: (String)
                     type: string
-                  enabled:
-                    description: (Boolean) Defaults to true. Defaults to `true`.
-                    type: boolean
-                  lagDeviceInterfaceId:
-                    description: (Number) If this device is a member of a LAG group,
-                      you can reference the LAG interface here. If this device is
-                      a member of a LAG group, you can reference the LAG interface
-                      here.
+                  localContextData:
+                    description: (String) This is best managed through the use of
+                      jsonencode and a map of settings. This is best managed through
+                      the use of `jsonencode` and a map of settings.
+                    type: string
+                  locationId:
+                    description: (Number)
                     type: number
-                  macAddress:
+                  platformId:
+                    description: (Number)
+                    type: number
+                  rackFace:
+                    description: (String) Valid values are front and rear. Required
+                      when rack_position is set. Valid values are `front` and `rear`.
+                      Required when `rack_position` is set.
+                    type: string
+                  rackId:
+                    description: (Number)
+                    type: number
+                  rackPosition:
+                    description: (Number)
+                    type: number
+                  serial:
                     description: (String)
                     type: string
-                  mgmtonly:
-                    description: (Boolean)
-                    type: boolean
-                  mode:
-                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                  status:
+                    description: (String) Valid values are offline, active, planned,
+                      staged, failed and inventory. Defaults to active. Valid values
+                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
+                      Defaults to `active`.
                     type: string
-                  mtu:
-                    description: (Number)
-                    type: number
-                  parentDeviceInterfaceId:
-                    description: (Number) The netbox_device_interface id of the parent
-                      interface. Useful if this interface is a logical interface.
-                      The netbox_device_interface id of the parent interface. Useful
-                      if this interface is a logical interface.
-                    type: number
-                  speed:
-                    description: (Number)
-                    type: number
-                  taggedVlans:
-                    description: (Set of Number)
-                    items:
-                      type: number
-                    type: array
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  type:
-                    description: (String)
-                    type: string
-                  untaggedVlan:
+                  tenantId:
+                    description: (Number)
+                    type: number
+                  virtualChassisId:
+                    description: (Number) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: number
+                  virtualChassisMaster:
+                    description: (Boolean) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: boolean
+                  virtualChassisPosition:
+                    description: (Number)
+                    type: number
+                  virtualChassisPriority:
                     description: (Number)
                     type: number
                 type: object
@@ -419,69 +618,99 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.type is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
-                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
-            description: DeviceInterfaceStatus defines the observed state of DeviceInterface.
+            description: DeviceStatus defines the observed state of Device.
             properties:
               atProvider:
                 properties:
+                  assetTag:
+                    description: (String)
+                    type: string
+                  clusterId:
+                    description: (Number)
+                    type: number
+                  comments:
+                    description: (String)
+                    type: string
+                  customFields:
+                    additionalProperties:
+                      type: string
+                    description: (Map of String)
+                    type: object
                   description:
                     description: (String)
                     type: string
-                  deviceId:
+                  deviceTypeId:
                     description: (Number)
                     type: number
-                  enabled:
-                    description: (Boolean) Defaults to true. Defaults to `true`.
-                    type: boolean
                   id:
                     description: (String) The ID of this resource.
                     type: string
-                  lagDeviceInterfaceId:
-                    description: (Number) If this device is a member of a LAG group,
-                      you can reference the LAG interface here. If this device is
-                      a member of a LAG group, you can reference the LAG interface
-                      here.
+                  localContextData:
+                    description: (String) This is best managed through the use of
+                      jsonencode and a map of settings. This is best managed through
+                      the use of `jsonencode` and a map of settings.
+                    type: string
+                  locationId:
+                    description: (Number)
                     type: number
-                  macAddress:
+                  platformId:
+                    description: (Number)
+                    type: number
+                  primaryIpv4:
+                    description: (Number)
+                    type: number
+                  primaryIpv6:
+                    description: (Number)
+                    type: number
+                  rackFace:
+                    description: (String) Valid values are front and rear. Required
+                      when rack_position is set. Valid values are `front` and `rear`.
+                      Required when `rack_position` is set.
+                    type: string
+                  rackId:
+                    description: (Number)
+                    type: number
+                  rackPosition:
+                    description: (Number)
+                    type: number
+                  roleId:
+                    description: (Number)
+                    type: number
+                  serial:
                     description: (String)
                     type: string
-                  mgmtonly:
-                    description: (Boolean)
-                    type: boolean
-                  mode:
-                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                  siteId:
+                    description: (Number)
+                    type: number
+                  status:
+                    description: (String) Valid values are offline, active, planned,
+                      staged, failed and inventory. Defaults to active. Valid values
+                      are `offline`, `active`, `planned`, `staged`, `failed` and `inventory`.
+                      Defaults to `active`.
                     type: string
-                  mtu:
-                    description: (Number)
-                    type: number
-                  parentDeviceInterfaceId:
-                    description: (Number) The netbox_device_interface id of the parent
-                      interface. Useful if this interface is a logical interface.
-                      The netbox_device_interface id of the parent interface. Useful
-                      if this interface is a logical interface.
-                    type: number
-                  speed:
-                    description: (Number)
-                    type: number
-                  taggedVlans:
-                    description: (Set of Number)
-                    items:
-                      type: number
-                    type: array
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  type:
-                    description: (String)
-                    type: string
-                  untaggedVlan:
+                  tenantId:
+                    description: (Number)
+                    type: number
+                  virtualChassisId:
+                    description: (Number) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: number
+                  virtualChassisMaster:
+                    description: (Boolean) Required when virtual_chassis_master and
+                      virtual_chassis_id is set. Required when `virtual_chassis_master`
+                      and `virtual_chassis_id` is set.
+                    type: boolean
+                  virtualChassisPosition:
+                    description: (Number)
+                    type: number
+                  virtualChassisPriority:
                     description: (Number)
                     type: number
                 type: object

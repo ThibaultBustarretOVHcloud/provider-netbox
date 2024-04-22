@@ -4,18 +4,18 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: ipaddresses.ipam.ThibaultBustarretOVHcloud.com
+  name: deviceinterfaces.dcim.thibaultbustarret-ovhcloud.com
 spec:
-  group: ipam.ThibaultBustarretOVHcloud.com
+  group: dcim.thibaultbustarret-ovhcloud.com
   names:
     categories:
     - crossplane
     - managed
     - netbox
-    kind: IPAddress
-    listKind: IPAddressList
-    plural: ipaddresses
-    singular: ipaddress
+    kind: DeviceInterface
+    listKind: DeviceInterfaceList
+    plural: deviceinterfaces
+    singular: deviceinterface
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,14 +34,12 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: 'IPAddress is the Schema for the IPAddresss API. From the official
-          documentation https://docs.netbox.dev/en/stable/features/ipam/#ip-addresses:
-          An IP address comprises a single host address (either IPv4 or IPv6) and
-          its subnet mask. Its mask should match exactly how the IP address is configured
-          on an interface in the real world. Like a prefix, an IP address can optionally
-          be assigned to a VRF (otherwise, it will appear in the "global" table).
-          IP addresses are automatically arranged under parent prefixes within their
-          respective VRFs according to the IP hierarchy.'
+        description: 'DeviceInterface is the Schema for the DeviceInterfaces API.
+          From the official documentation https://docs.netbox.dev/en/stable/features/device/#interface:
+          Interfaces in NetBox represent network interfaces used to exchange data
+          with connected devices. On modern networks, these are most commonly Ethernet,
+          but other types are supported as well. IP addresses and VLANs can be assigned
+          to interfaces.'
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -56,7 +54,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: IPAddressSpec defines the desired state of IPAddress
+            description: DeviceInterfaceSpec defines the desired state of DeviceInterface
             properties:
               deletionPolicy:
                 default: Delete
@@ -76,12 +74,11 @@ spec:
                   description:
                     description: (String)
                     type: string
-                  deviceInterfaceId:
-                    description: (Number) Conflicts with interface_id and virtual_machine_interface_id.
-                      Conflicts with `interface_id` and `virtual_machine_interface_id`.
+                  deviceId:
+                    description: (Number)
                     type: number
-                  deviceInterfaceIdRef:
-                    description: Reference to a DeviceInterface to populate deviceInterfaceId.
+                  deviceIdRef:
+                    description: Reference to a Device to populate deviceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -114,8 +111,8 @@ spec:
                     required:
                     - name
                     type: object
-                  deviceInterfaceIdSelector:
-                    description: Selector for a DeviceInterface to populate deviceInterfaceId.
+                  deviceIdSelector:
+                    description: Selector for a Device to populate deviceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -153,48 +150,50 @@ spec:
                             type: string
                         type: object
                     type: object
-                  dnsName:
-                    description: (String)
-                    type: string
-                  interfaceId:
-                    description: (Number) Required when object_type is set. Required
-                      when `object_type` is set.
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
                     type: number
-                  ipAddress:
+                  macAddress:
                     description: (String)
                     type: string
-                  natInsideAddressId:
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
                     description: (Number)
                     type: number
-                  objectType:
-                    description: (String) Valid values are virtualization.vminterface
-                      and dcim.interface. Required when interface_id is set. Valid
-                      values are `virtualization.vminterface` and `dcim.interface`.
-                      Required when `interface_id` is set.
-                    type: string
-                  role:
-                    description: (String) Valid values are loopback, secondary, anycast,
-                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
-                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
-                    type: string
-                  status:
-                    description: (String) Valid values are active, reserved, deprecated,
-                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
-                      `dhcp` and `slaac`.
-                    type: string
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
+                    items:
+                      type: number
+                    type: array
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  tenantId:
-                    description: (Number)
-                    type: number
-                  virtualMachineInterfaceId:
-                    description: (Number) Conflicts with interface_id and device_interface_id.
-                      Conflicts with `interface_id` and `device_interface_id`.
-                    type: number
-                  vrfId:
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
                     description: (Number)
                     type: number
                 type: object
@@ -213,48 +212,50 @@ spec:
                   description:
                     description: (String)
                     type: string
-                  dnsName:
-                    description: (String)
-                    type: string
-                  interfaceId:
-                    description: (Number) Required when object_type is set. Required
-                      when `object_type` is set.
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
                     type: number
-                  ipAddress:
+                  macAddress:
                     description: (String)
                     type: string
-                  natInsideAddressId:
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
                     description: (Number)
                     type: number
-                  objectType:
-                    description: (String) Valid values are virtualization.vminterface
-                      and dcim.interface. Required when interface_id is set. Valid
-                      values are `virtualization.vminterface` and `dcim.interface`.
-                      Required when `interface_id` is set.
-                    type: string
-                  role:
-                    description: (String) Valid values are loopback, secondary, anycast,
-                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
-                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
-                    type: string
-                  status:
-                    description: (String) Valid values are active, reserved, deprecated,
-                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
-                      `dhcp` and `slaac`.
-                    type: string
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
+                    items:
+                      type: number
+                    type: array
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  tenantId:
-                    description: (Number)
-                    type: number
-                  virtualMachineInterfaceId:
-                    description: (Number) Conflicts with interface_id and device_interface_id.
-                      Conflicts with `interface_id` and `device_interface_id`.
-                    type: number
-                  vrfId:
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
                     description: (Number)
                     type: number
                 type: object
@@ -419,86 +420,68 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.ipAddress is a required parameter
+            - message: spec.forProvider.type is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.ipAddress)
-                || (has(self.initProvider) && has(self.initProvider.ipAddress))'
-            - message: spec.forProvider.status is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.status)
-                || (has(self.initProvider) && has(self.initProvider.status))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
-            description: IPAddressStatus defines the observed state of IPAddress.
+            description: DeviceInterfaceStatus defines the observed state of DeviceInterface.
             properties:
               atProvider:
                 properties:
                   description:
                     description: (String)
                     type: string
-                  deviceInterfaceId:
-                    description: (Number) Conflicts with interface_id and virtual_machine_interface_id.
-                      Conflicts with `interface_id` and `virtual_machine_interface_id`.
+                  deviceId:
+                    description: (Number)
                     type: number
-                  dnsName:
-                    description: (String)
-                    type: string
+                  enabled:
+                    description: (Boolean) Defaults to true. Defaults to `true`.
+                    type: boolean
                   id:
                     description: (String) The ID of this resource.
                     type: string
-                  interfaceId:
-                    description: (Number) Required when object_type is set. Required
-                      when `object_type` is set.
+                  lagDeviceInterfaceId:
+                    description: (Number) If this device is a member of a LAG group,
+                      you can reference the LAG interface here. If this device is
+                      a member of a LAG group, you can reference the LAG interface
+                      here.
                     type: number
-                  ipAddress:
+                  macAddress:
                     description: (String)
                     type: string
-                  natInsideAddressId:
+                  mgmtonly:
+                    description: (Boolean)
+                    type: boolean
+                  mode:
+                    description: all. Valid values are `access`, `tagged` and `tagged-all`.
+                    type: string
+                  mtu:
                     description: (Number)
                     type: number
-                  natOutsideAddresses:
-                    description: (List of Object) (see below for nested schema)
+                  parentDeviceInterfaceId:
+                    description: (Number) The netbox_device_interface id of the parent
+                      interface. Useful if this interface is a logical interface.
+                      The netbox_device_interface id of the parent interface. Useful
+                      if this interface is a logical interface.
+                    type: number
+                  speed:
+                    description: (Number)
+                    type: number
+                  taggedVlans:
+                    description: (Set of Number)
                     items:
-                      properties:
-                        addressFamily:
-                          description: (Number)
-                          type: number
-                        id:
-                          description: (String) The ID of this resource.
-                          type: number
-                        ipAddress:
-                          description: (String)
-                          type: string
-                      type: object
+                      type: number
                     type: array
-                  objectType:
-                    description: (String) Valid values are virtualization.vminterface
-                      and dcim.interface. Required when interface_id is set. Valid
-                      values are `virtualization.vminterface` and `dcim.interface`.
-                      Required when `interface_id` is set.
-                    type: string
-                  role:
-                    description: (String) Valid values are loopback, secondary, anycast,
-                      vip, vrrp, hsrp, glbp and carp. Valid values are `loopback`,
-                      `secondary`, `anycast`, `vip`, `vrrp`, `hsrp`, `glbp` and `carp`.
-                    type: string
-                  status:
-                    description: (String) Valid values are active, reserved, deprecated,
-                      dhcp and slaac. Valid values are `active`, `reserved`, `deprecated`,
-                      `dhcp` and `slaac`.
-                    type: string
                   tags:
                     description: (Set of String)
                     items:
                       type: string
                     type: array
-                  tenantId:
-                    description: (Number)
-                    type: number
-                  virtualMachineInterfaceId:
-                    description: (Number) Conflicts with interface_id and device_interface_id.
-                      Conflicts with `interface_id` and `device_interface_id`.
-                    type: number
-                  vrfId:
+                  type:
+                    description: (String)
+                    type: string
+                  untaggedVlan:
                     description: (Number)
                     type: number
                 type: object

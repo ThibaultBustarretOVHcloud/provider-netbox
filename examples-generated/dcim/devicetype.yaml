@@ -1,4 +1,4 @@
-apiVersion: dcim.ThibaultBustarretOVHcloud.com/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: DeviceType
 metadata:
   annotations:
@@ -16,7 +16,7 @@ spec:
 
 ---
 
-apiVersion: dcim.ThibaultBustarretOVHcloud.com/v1alpha1
+apiVersion: dcim.thibaultbustarret-ovhcloud.com/v1alpha1
 kind: Manufacturer
 metadata:
   annotations:

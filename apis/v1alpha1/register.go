@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "netbox.ThibaultBustarretOVHcloud.com"
+	Group   = "netbox.thibaultbustarret-ovhcloud.com"
 	Version = "v1alpha1"
 )
 

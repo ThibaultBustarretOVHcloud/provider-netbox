@@ -127,16 +127,16 @@ type IPAddressParameters struct {
 
 	// (Number) Conflicts with interface_id and virtual_machine_interface_id.
 	// Conflicts with `interface_id` and `virtual_machine_interface_id`.
-	// +crossplane:generate:reference:type=DeviceInterface
+	// +crossplane:generate:reference:type=github.com/thibaultbustarret-ovhcloud/provider-netbox/apis/dcim/v1alpha1.DeviceInterface
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DeviceInterfaceID *float64 `json:"deviceInterfaceId,omitempty" tf:"device_interface_id,omitempty"`
 
-	// Reference to a DeviceInterface to populate deviceInterfaceId.
+	// Reference to a DeviceInterface in dcim to populate deviceInterfaceId.
 	// +kubebuilder:validation:Optional
 	DeviceInterfaceIDRef *v1.Reference `json:"deviceInterfaceIdRef,omitempty" tf:"-"`
 
-	// Selector for a DeviceInterface to populate deviceInterfaceId.
+	// Selector for a DeviceInterface in dcim to populate deviceInterfaceId.
 	// +kubebuilder:validation:Optional
 	DeviceInterfaceIDSelector *v1.Selector `json:"deviceInterfaceIdSelector,omitempty" tf:"-"`
 

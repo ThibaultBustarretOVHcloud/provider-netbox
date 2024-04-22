@@ -11,7 +11,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config"
 )
 
 func main() {

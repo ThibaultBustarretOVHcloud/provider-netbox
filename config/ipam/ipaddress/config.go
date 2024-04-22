@@ -10,7 +10,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "IPAddress"
 
 		r.References["device_interface_id"] = config.Reference{
-			Type:      "DeviceInterface",
+			Type:      "github.com/thibaultbustarret-ovhcloud/provider-netbox/apis/dcim/v1alpha1.DeviceInterface",
 			Extractor: "github.com/crossplane/upjet/pkg/resource.ExtractResourceID()",
 		}
 	})

@@ -10,18 +10,18 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/device"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/deviceinterface"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/devicerole"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/devicetype"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/manufacturer"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/dcim/site"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config/ipam/ipaddress"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/device"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/deviceinterface"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/devicerole"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/devicetype"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/manufacturer"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/dcim/site"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config/ipam/ipaddress"
 )
 
 const (
 	resourcePrefix = "netbox"
-	modulePath     = "github.com/ThibaultBustarretOVHcloud/provider-netbox"
+	modulePath     = "github.com/thibaultbustarret-ovhcloud/provider-netbox"
 )
 
 //go:embed schema.json
@@ -33,7 +33,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("ThibaultBustarretOVHcloud.com"),
+		ujconfig.WithRootGroup("thibaultbustarret-ovhcloud.com"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(

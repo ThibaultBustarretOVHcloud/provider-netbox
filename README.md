@@ -10,9 +10,9 @@ Netbox API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/ThibaultBustarretOVHcloud/provider-netbox):
+to the [latest release](https://marketplace.upbound.io/providers/thibaultbustarret-ovhcloud/provider-netbox):
 ```
-up ctp provider install ThibaultBustarretOVHcloud/provider-netbox:v0.1.0
+up ctp provider install thibaultbustarret-ovhcloud/provider-netbox:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -23,13 +23,13 @@ kind: Provider
 metadata:
   name: provider-netbox
 spec:
-  package: ThibaultBustarretOVHcloud/provider-netbox:v0.1.0
+  package: thibaultbustarret-ovhcloud/provider-netbox:v0.1.0
 EOF
 ```
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://doc.crds.dev/github.com/ThibaultBustarretOVHcloud/provider-netbox).
+You can see the API reference [here](https://doc.crds.dev/github.com/thibaultbustarret-ovhcloud/provider-netbox).
 
 ## Developing
 
@@ -59,4 +59,4 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/ThibaultBustarretOVHcloud/provider-netbox/issues).
+open an [issue](https://github.com/thibaultbustarret-ovhcloud/provider-netbox/issues).

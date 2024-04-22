@@ -9,14 +9,14 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
-	device "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/device"
-	deviceinterface "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/deviceinterface"
-	devicerole "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/devicerole"
-	devicetype "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/devicetype"
-	manufacturer "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/manufacturer"
-	site "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/dcim/site"
-	ipaddress "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/ipam/ipaddress"
-	providerconfig "github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller/providerconfig"
+	device "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/device"
+	deviceinterface "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/deviceinterface"
+	devicerole "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/devicerole"
+	devicetype "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/devicetype"
+	manufacturer "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/manufacturer"
+	site "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/dcim/site"
+	ipaddress "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/ipam/ipaddress"
+	providerconfig "github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller/providerconfig"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

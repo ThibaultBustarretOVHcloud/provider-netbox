@@ -26,12 +26,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/apis"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/apis/v1alpha1"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/config"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/clients"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/controller"
-	"github.com/ThibaultBustarretOVHcloud/provider-netbox/internal/features"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/apis"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/apis/v1alpha1"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/config"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/clients"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/controller"
+	"github.com/thibaultbustarret-ovhcloud/provider-netbox/internal/features"
 )
 
 func main() {

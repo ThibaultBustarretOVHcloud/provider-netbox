@@ -10,6 +10,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
+	v1alpha1 "github.com/thibaultbustarret-ovhcloud/provider-netbox/apis/dcim/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -26,8 +27,8 @@ func (mg *IPAddress) ResolveReferences(ctx context.Context, c client.Reader) err
 		Reference:    mg.Spec.ForProvider.DeviceInterfaceIDRef,
 		Selector:     mg.Spec.ForProvider.DeviceInterfaceIDSelector,
 		To: reference.To{
-			List:    &DeviceInterfaceList{},
-			Managed: &DeviceInterface{},
+			List:    &v1alpha1.DeviceInterfaceList{},
+			Managed: &v1alpha1.DeviceInterface{},
 		},
 	})
 	if err != nil {
